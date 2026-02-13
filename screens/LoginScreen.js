@@ -16,17 +16,47 @@ import { useAuth } from '../contexts/AuthContext';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [usePassword, setUsePassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { signInWithOtp } = useAuth();
+  const [showPassword, setShowPassword] = useState(false);
+  const { signInWithOtp, signInWithPassword } = useAuth();
 
-  const handleLogin = async () => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  const handleLoginWithPassword = async () => {
     if (!email.trim()) {
       Alert.alert('Error', 'Please enter your email address');
       return;
     }
+    if (!emailRegex.test(email)) {
+      Alert.alert('Error', 'Please enter a valid email address');
+      return;
+    }
+    if (!password) {
+      Alert.alert('Error', 'Please enter your password');
+      return;
+    }
 
-    // Basic email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    setLoading(true);
+    try {
+      const { error } = await signInWithPassword(email, password);
+      if (error) {
+        Alert.alert('Error', error.message);
+      }
+      // On success, auth state change will navigate to main app
+    } catch (error) {
+      Alert.alert('Error', 'Something went wrong. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSendOtp = async () => {
+    if (!email.trim()) {
+      Alert.alert('Error', 'Please enter your email address');
+      return;
+    }
     if (!emailRegex.test(email)) {
       Alert.alert('Error', 'Please enter a valid email address');
       return;
@@ -38,13 +68,20 @@ const LoginScreen = ({ navigation }) => {
       if (error) {
         Alert.alert('Error', error.message);
       } else {
-        // Navigate to OTP verification screen
         navigation.navigate('OTPVerification', { email });
       }
     } catch (error) {
       Alert.alert('Error', 'Something went wrong. Please try again.');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleSubmit = () => {
+    if (usePassword) {
+      handleLoginWithPassword();
+    } else {
+      handleSendOtp();
     }
   };
 
@@ -70,7 +107,9 @@ const LoginScreen = ({ navigation }) => {
         <View style={styles.formContainer}>
           <Text style={styles.formTitle}>Login</Text>
           <Text style={styles.formSubtitle}>
-            We'll send you a one-time password via email
+            {usePassword
+              ? 'Sign in with your email and password'
+              : "We'll send you a one-time code via email"}
           </Text>
 
           <View style={styles.inputContainer}>
@@ -93,16 +132,60 @@ const LoginScreen = ({ navigation }) => {
             />
           </View>
 
+          {usePassword && (
+            <View style={styles.inputContainer}>
+              <Ionicons
+                name="lock-closed-outline"
+                size={20}
+                color="#666"
+                style={styles.inputIcon}
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Password"
+                placeholderTextColor="#999"
+                value={password}
+                onChangeText={setPassword}
+                secureTextEntry={!showPassword}
+                editable={!loading}
+              />
+              <TouchableOpacity
+                onPress={() => setShowPassword(!showPassword)}
+                style={styles.eyeIcon}
+              >
+                <Ionicons
+                  name={showPassword ? 'eye-outline' : 'eye-off-outline'}
+                  size={20}
+                  color="#666"
+                />
+              </TouchableOpacity>
+            </View>
+          )}
+
           <TouchableOpacity
             style={[styles.button, loading && styles.buttonDisabled]}
-            onPress={handleLogin}
+            onPress={handleSubmit}
             disabled={loading}
           >
             {loading ? (
               <ActivityIndicator color="#fff" />
             ) : (
-              <Text style={styles.buttonText}>Send OTP</Text>
+              <Text style={styles.buttonText}>
+                {usePassword ? 'Login' : 'Send OTP'}
+              </Text>
             )}
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.switchModeButton}
+            onPress={() => setUsePassword(!usePassword)}
+            disabled={loading}
+          >
+            <Text style={styles.switchModeText}>
+              {usePassword
+                ? "Use email code instead"
+                : 'I have a password'}
+            </Text>
           </TouchableOpacity>
 
           <View style={styles.divider}>
@@ -117,7 +200,7 @@ const LoginScreen = ({ navigation }) => {
             disabled={loading}
           >
             <Text style={styles.signUpButtonText}>
-              Don't have an account? <Text style={styles.signUpLink}>Sign Up</Text>
+              Don't have an account? <Text style={styles.signUpLink}>Register now</Text>
             </Text>
           </TouchableOpacity>
         </View>
@@ -194,6 +277,9 @@ const styles = StyleSheet.create({
   inputIcon: {
     marginRight: 12,
   },
+  eyeIcon: {
+    padding: 5,
+  },
   input: {
     flex: 1,
     height: 50,
@@ -214,6 +300,14 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  switchModeButton: {
+    alignItems: 'center',
+    marginTop: 12,
+  },
+  switchModeText: {
+    fontSize: 14,
+    color: '#007AFF',
   },
   divider: {
     flexDirection: 'row',
@@ -244,4 +338,6 @@ const styles = StyleSheet.create({
 });
 
 export default LoginScreen;
+
+
 

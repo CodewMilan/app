@@ -12,24 +12,45 @@
 5. Click "Create new project"
 6. Wait for the project to be set up (takes 1-2 minutes)
 
-## Step 2: Get Your API Credentials
+## Step 2: Get Your API Credentials (for .env)
 
 1. In your Supabase project dashboard, go to **Settings** (gear icon)
 2. Click on **API** in the left sidebar
-3. You'll see:
-   - **Project URL**: Copy this value
-   - **anon public** key: Copy this value (under "Project API keys")
+3. Copy these two values:
+   - **Project URL** → use for `EXPO_PUBLIC_SUPABASE_URL`
+   - **anon public** key (under "Project API keys") → use for `EXPO_PUBLIC_SUPABASE_ANON_KEY`
 
-## Step 3: Configure the App
+## Step 3: Configure the App with Environment Variables
 
-1. Open `config/supabase.js` in your project
-2. Replace the placeholders:
-   ```javascript
-   const supabaseUrl = 'YOUR_SUPABASE_URL';  // Replace with your Project URL
-   const supabaseAnonKey = 'YOUR_SUPABASE_ANON_KEY';  // Replace with your anon key
+1. In the project root, copy the example env file:
+   ```bash
+   cp .env.example .env
    ```
+2. Open `.env` and set your Supabase values (from Step 2):
+   ```env
+   EXPO_PUBLIC_SUPABASE_URL=https://xxxxxxxxxxxx.supabase.co
+   EXPO_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.xxxxx
+   ```
+3. Restart the app after changing `.env` (e.g. `npx expo start`).
 
-## Step 4: Configure Email Templates (Optional)
+**Do not commit `.env`** — it is in `.gitignore`. Commit `.env.example` only (without real keys).
+
+| Env variable | Where to get it in Supabase |
+|--------------|-----------------------------|
+| `EXPO_PUBLIC_SUPABASE_URL` | **Settings** → **API** → **Project URL** |
+| `EXPO_PUBLIC_SUPABASE_ANON_KEY` | **Settings** → **API** → **Project API keys** → **anon** (public) |
+
+## Step 4: Enable Email + Password Auth (Supabase Dashboard)
+
+The app supports **email OTP** (magic link style) and **email + password** login.
+
+1. In Supabase: **Authentication** → **Providers**
+2. **Email** is on by default. Under Email you can:
+   - Leave "Confirm email" on if you want new sign-ups to verify email (recommended).
+   - For **password sign-in**: users who register with email+password can then log in with the same password; no extra config needed.
+3. (Optional) **Authentication** → **Email Templates** to customize OTP/confirmation emails.
+
+## Step 5: Configure Email Templates (Optional)
 
 Supabase sends OTP emails automatically. You can customize the email template:
 
@@ -37,15 +58,12 @@ Supabase sends OTP emails automatically. You can customize the email template:
 2. Customize the "Magic Link" template (used for OTP)
 3. The default template works fine for testing
 
-## Step 5: Test Authentication
+## Step 6: Test Authentication
 
 1. Run your app: `npm start`
-2. Try signing up with a new email
-3. Check your email for the verification link
-4. Try logging in with OTP:
-   - Enter your email
-   - Check your email for the OTP code
-   - Enter the 6-digit code
+2. **Register**: Tap "Don't have an account? Register now" → create account with email + password (+ name, college).
+3. **Login with password**: On Login, tap "I have a password", enter email + password, then Login.
+4. **Login with OTP**: Enter email only → "Send OTP" → enter the 6-digit code from your email.
 
 ## Troubleshooting
 
@@ -68,4 +86,6 @@ Supabase sends OTP emails automatically. You can customize the email template:
 - Never commit your Supabase keys to version control
 - The `anon` key is safe to use in client-side code (it's public)
 - Row Level Security (RLS) policies should be set up in Supabase for production
+
+
 
