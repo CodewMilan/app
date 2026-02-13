@@ -14,8 +14,9 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import Feather from '@expo/vector-icons/Feather';
 import { useAuth } from '../contexts/AuthContext';
+import theme from '../theme';
 
 const SKILLS_API_URL = 'https://api.stackexchange.com/2.3/tags?page=1&pagesize=150&order=desc&sort=popular&site=stackoverflow';
 const FALLBACK_SKILLS = [
@@ -188,29 +189,29 @@ const ProfileScreen = () => {
           </View>
         </View>
         <TouchableOpacity style={styles.editButton} onPress={openEditProfile}>
-          <Ionicons name="create-outline" size={20} color="#007AFF" />
+          <Feather name="edit-2" size={20} color={theme.primary} />
           <Text style={styles.editButtonText}>Edit Profile</Text>
         </TouchableOpacity>
       </View>
 
       <View style={styles.statsContainer}>
         <View style={styles.statItem}>
-          <View style={styles.statIcon}><Ionicons name="flame" size={24} color="#FF6B35" /></View>
+          <View style={styles.statIcon}><Feather name="zap" size={24} color={theme.warning} /></View>
           <Text style={styles.statNumber}>{stats.streak}</Text>
           <Text style={styles.statLabel}>Day Streak</Text>
         </View>
         <View style={styles.statItem}>
-          <View style={styles.statIcon}><Ionicons name="folder" size={24} color="#007AFF" /></View>
+          <View style={styles.statIcon}><Feather name="folder" size={24} color={theme.primary} /></View>
           <Text style={styles.statNumber}>{stats.projects}</Text>
           <Text style={styles.statLabel}>Projects</Text>
         </View>
         <View style={styles.statItem}>
-          <View style={styles.statIcon}><Ionicons name="trophy" size={24} color="#FFD700" /></View>
+          <View style={styles.statIcon}><Feather name="award" size={24} color={theme.primary} /></View>
           <Text style={styles.statNumber}>{stats.hackathons}</Text>
           <Text style={styles.statLabel}>Hackathons</Text>
         </View>
         <View style={styles.statItem}>
-          <View style={styles.statIcon}><Ionicons name="document-text" size={24} color="#4CAF50" /></View>
+          <View style={styles.statIcon}><Feather name="file-text" size={24} color={theme.secondary} /></View>
           <Text style={styles.statNumber}>{stats.posts}</Text>
           <Text style={styles.statLabel}>Posts</Text>
         </View>
@@ -237,7 +238,7 @@ const ProfileScreen = () => {
           )}
         </View>
         <TouchableOpacity style={styles.addButton} onPress={openAddSkill}>
-          <Ionicons name="add-circle-outline" size={20} color="#007AFF" />
+          <Feather name="plus-circle" size={20} color={theme.primary} />
           <Text style={styles.addButtonText}>Add Skill</Text>
         </TouchableOpacity>
       </View>
@@ -245,19 +246,19 @@ const ProfileScreen = () => {
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Social Links</Text>
         <TouchableOpacity style={styles.linkItem} onPress={() => (github ? openUrl(github) : openSocialLinks())}>
-          <Ionicons name="logo-github" size={24} color="#333" />
+          <Feather name="github" size={24} color={theme.text} />
           <Text style={styles.linkText}>{github || 'Add GitHub URL'}</Text>
-          <Ionicons name="chevron-forward" size={20} color="#999" />
+          <Feather name="chevron-right" size={20} color={theme.textMuted} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.linkItem} onPress={() => (linkedin ? openUrl(linkedin) : openSocialLinks())}>
-          <Ionicons name="logo-linkedin" size={24} color="#0077B5" />
+          <Feather name="linkedin" size={24} color={theme.info} />
           <Text style={styles.linkText}>{linkedin || 'Add LinkedIn URL'}</Text>
-          <Ionicons name="chevron-forward" size={20} color="#999" />
+          <Feather name="chevron-right" size={20} color={theme.textMuted} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.linkItem} onPress={() => (portfolio ? openUrl(portfolio) : openSocialLinks())}>
-          <Ionicons name="globe-outline" size={24} color="#333" />
+          <Feather name="globe" size={24} color={theme.text} />
           <Text style={styles.linkText}>{portfolio || 'Add Portfolio URL'}</Text>
-          <Ionicons name="chevron-forward" size={20} color="#999" />
+          <Feather name="chevron-right" size={20} color={theme.textMuted} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.editLinksButton} onPress={openSocialLinks}>
           <Text style={styles.editLinksButtonText}>Edit social links</Text>
@@ -283,17 +284,17 @@ const ProfileScreen = () => {
 
       <View style={styles.section}>
         <TouchableOpacity style={styles.menuItem} onPress={handleSettings}>
-          <Ionicons name="settings-outline" size={24} color="#666" />
+          <Feather name="settings" size={24} color={theme.textSecondary} />
           <Text style={styles.menuText}>Settings</Text>
-          <Ionicons name="chevron-forward" size={20} color="#999" />
+          <Feather name="chevron-right" size={20} color={theme.textMuted} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.menuItem} onPress={handleHelp}>
-          <Ionicons name="help-circle-outline" size={24} color="#666" />
+          <Feather name="help-circle" size={24} color={theme.textSecondary} />
           <Text style={styles.menuText}>Help & Support</Text>
-          <Ionicons name="chevron-forward" size={20} color="#999" />
+          <Feather name="chevron-right" size={20} color={theme.textMuted} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.menuItem} onPress={handleLogout}>
-          <Ionicons name="log-out-outline" size={24} color="#FF3B30" />
+          <Feather name="log-out" size={24} color={theme.error} />
           <Text style={[styles.menuText, styles.logoutText]}>Logout</Text>
         </TouchableOpacity>
       </View>
@@ -305,14 +306,14 @@ const ProfileScreen = () => {
             <View style={styles.modalHeader}>
               <Text style={styles.modalTitle}>Edit Profile</Text>
               <TouchableOpacity onPress={() => setEditModalVisible(false)}>
-                <Ionicons name="close" size={28} color="#666" />
+                <Feather name="x" size={28} color={theme.textMuted} />
               </TouchableOpacity>
             </View>
-            <TextInput style={styles.input} placeholder="Full name" placeholderTextColor="#999" value={editFullName} onChangeText={setEditFullName} />
-            <TextInput style={styles.input} placeholder="College" placeholderTextColor="#999" value={editCollege} onChangeText={setEditCollege} />
-            <TextInput style={[styles.input, styles.textArea]} placeholder="Short bio (optional)" placeholderTextColor="#999" value={editBio} onChangeText={setEditBio} multiline />
+            <TextInput style={styles.input} placeholder="Full name" placeholderTextColor={theme.textMuted} value={editFullName} onChangeText={setEditFullName} />
+            <TextInput style={styles.input} placeholder="College" placeholderTextColor={theme.textMuted} value={editCollege} onChangeText={setEditCollege} />
+            <TextInput style={[styles.input, styles.textArea]} placeholder="Short bio (optional)" placeholderTextColor={theme.textMuted} value={editBio} onChangeText={setEditBio} multiline />
             <TouchableOpacity style={styles.saveButton} onPress={saveEditProfile} disabled={editSaving}>
-              {editSaving ? <ActivityIndicator color="#fff" /> : <Text style={styles.saveButtonText}>Save</Text>}
+              {editSaving ? <ActivityIndicator color={theme.textOnPrimary} /> : <Text style={styles.saveButtonText}>Save</Text>}
             </TouchableOpacity>
           </View>
         </KeyboardAvoidingView>
@@ -325,19 +326,19 @@ const ProfileScreen = () => {
             <View style={styles.modalHeader}>
               <Text style={styles.modalTitle}>Add Skill</Text>
               <TouchableOpacity onPress={() => setSkillModalVisible(false)}>
-                <Ionicons name="close" size={28} color="#666" />
+                <Feather name="x" size={28} color={theme.textMuted} />
               </TouchableOpacity>
             </View>
             <Text style={styles.skillHint}>Skills are loaded from the web. Search and tap to add.</Text>
             <TextInput
               style={styles.input}
               placeholder="Search skills..."
-              placeholderTextColor="#999"
+              placeholderTextColor={theme.textMuted}
               value={skillSearch}
               onChangeText={setSkillSearch}
             />
             {skillsLoading ? (
-              <ActivityIndicator size="large" color="#007AFF" style={{ marginVertical: 20 }} />
+              <ActivityIndicator size="large" color={theme.primary} style={{ marginVertical: 20 }} />
             ) : (
               <FlatList
                 data={filteredSkills.slice(0, 80)}
@@ -347,7 +348,7 @@ const ProfileScreen = () => {
                 renderItem={({ item }) => (
                   <TouchableOpacity style={styles.skillListItem} onPress={() => addSkill(item)} disabled={skillSaving}>
                     <Text style={styles.skillListItemText}>{item}</Text>
-                    {skills.includes(item) ? <Ionicons name="checkmark-circle" size={20} color="#4CAF50" /> : <Ionicons name="add-circle-outline" size={20} color="#007AFF" />}
+                    {skills.includes(item) ? <Feather name="check-circle" size={20} color={theme.secondary} /> : <Feather name="plus-circle" size={20} color={theme.primary} />}
                   </TouchableOpacity>
                 )}
               />
@@ -363,17 +364,17 @@ const ProfileScreen = () => {
             <View style={styles.modalHeader}>
               <Text style={styles.modalTitle}>Social Links</Text>
               <TouchableOpacity onPress={() => setSocialModalVisible(false)}>
-                <Ionicons name="close" size={28} color="#666" />
+                <Feather name="x" size={28} color={theme.textMuted} />
               </TouchableOpacity>
             </View>
             <Text style={styles.inputLabel}>GitHub profile URL</Text>
-            <TextInput style={styles.input} placeholder="https://github.com/username" placeholderTextColor="#999" value={editGithub} onChangeText={setEditGithub} keyboardType="url" autoCapitalize="none" />
+            <TextInput style={styles.input} placeholder="https://github.com/username" placeholderTextColor={theme.textMuted} value={editGithub} onChangeText={setEditGithub} keyboardType="url" autoCapitalize="none" />
             <Text style={styles.inputLabel}>LinkedIn profile URL</Text>
-            <TextInput style={styles.input} placeholder="https://linkedin.com/in/username" placeholderTextColor="#999" value={editLinkedin} onChangeText={setEditLinkedin} keyboardType="url" autoCapitalize="none" />
+            <TextInput style={styles.input} placeholder="https://linkedin.com/in/username" placeholderTextColor={theme.textMuted} value={editLinkedin} onChangeText={setEditLinkedin} keyboardType="url" autoCapitalize="none" />
             <Text style={styles.inputLabel}>Portfolio / website URL</Text>
-            <TextInput style={styles.input} placeholder="https://yourportfolio.com" placeholderTextColor="#999" value={editPortfolio} onChangeText={setEditPortfolio} keyboardType="url" autoCapitalize="none" />
+            <TextInput style={styles.input} placeholder="https://yourportfolio.com" placeholderTextColor={theme.textMuted} value={editPortfolio} onChangeText={setEditPortfolio} keyboardType="url" autoCapitalize="none" />
             <TouchableOpacity style={styles.saveButton} onPress={saveSocialLinks} disabled={socialSaving}>
-              {socialSaving ? <ActivityIndicator color="#fff" /> : <Text style={styles.saveButtonText}>Save links</Text>}
+              {socialSaving ? <ActivityIndicator color={theme.textOnPrimary} /> : <Text style={styles.saveButtonText}>Save links</Text>}
             </TouchableOpacity>
           </View>
         </KeyboardAvoidingView>
@@ -383,56 +384,56 @@ const ProfileScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#f5f5f5' },
-  header: { backgroundColor: '#fff', padding: 20, borderBottomWidth: 1, borderBottomColor: '#e0e0e0' },
+  container: { flex: 1, backgroundColor: theme.background },
+  header: { backgroundColor: theme.surface, padding: 20, borderBottomWidth: 1, borderBottomColor: theme.border },
   profileHeader: { flexDirection: 'row', marginBottom: 15 },
-  avatar: { width: 80, height: 80, borderRadius: 40, backgroundColor: '#007AFF', justifyContent: 'center', alignItems: 'center', marginRight: 15 },
-  avatarText: { color: '#fff', fontSize: 32, fontWeight: 'bold' },
+  avatar: { width: 80, height: 80, borderRadius: 40, backgroundColor: theme.primary, justifyContent: 'center', alignItems: 'center', marginRight: 15 },
+  avatarText: { color: theme.textOnPrimary, fontSize: 32, fontFamily: theme.fontFamilyBold },
   profileInfo: { flex: 1 },
-  name: { fontSize: 24, fontWeight: 'bold', marginBottom: 5 },
-  bio: { fontSize: 14, color: '#666', marginBottom: 2 },
-  bioLine: { fontSize: 14, color: '#666', marginBottom: 2 },
-  college: { fontSize: 14, color: '#999' },
-  editButton: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 12, borderWidth: 1, borderColor: '#007AFF', borderRadius: 8 },
-  editButtonText: { color: '#007AFF', marginLeft: 5, fontWeight: 'bold' },
-  statsContainer: { flexDirection: 'row', backgroundColor: '#fff', padding: 20, justifyContent: 'space-around', borderBottomWidth: 1, borderBottomColor: '#e0e0e0' },
+  name: { fontSize: 24, fontFamily: theme.fontFamilyBold, marginBottom: 5, color: theme.text },
+  bio: { fontSize: 14, fontFamily: theme.fontFamily, color: theme.textSecondary, marginBottom: 2 },
+  bioLine: { fontSize: 14, fontFamily: theme.fontFamily, color: theme.textSecondary, marginBottom: 2 },
+  college: { fontSize: 14, fontFamily: theme.fontFamily, color: theme.textMuted },
+  editButton: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 12, borderWidth: 1, borderColor: theme.primary, borderRadius: theme.radiusSm },
+  editButtonText: { color: theme.primary, marginLeft: 5, fontFamily: theme.fontFamilySemiBold },
+  statsContainer: { flexDirection: 'row', backgroundColor: theme.surface, padding: 20, justifyContent: 'space-around', borderBottomWidth: 1, borderBottomColor: theme.border },
   statItem: { alignItems: 'center' },
   statIcon: { marginBottom: 5 },
-  statNumber: { fontSize: 20, fontWeight: 'bold', color: '#333' },
-  statLabel: { fontSize: 12, color: '#666', marginTop: 5 },
-  section: { backgroundColor: '#fff', padding: 20, marginTop: 10, borderTopWidth: 1, borderTopColor: '#e0e0e0' },
-  sectionTitle: { fontSize: 18, fontWeight: 'bold', marginBottom: 15 },
+  statNumber: { fontSize: 20, fontFamily: theme.fontFamilyBold, color: theme.text },
+  statLabel: { fontSize: 12, fontFamily: theme.fontFamily, color: theme.textSecondary, marginTop: 5 },
+  section: { backgroundColor: theme.surface, padding: 20, marginTop: 10, borderTopWidth: 1, borderTopColor: theme.border },
+  sectionTitle: { fontSize: 18, fontFamily: theme.fontFamilySemiBold, marginBottom: 15, color: theme.text },
   skillsContainer: { flexDirection: 'row', flexWrap: 'wrap', marginBottom: 15 },
-  skillTag: { backgroundColor: '#f0f0f0', paddingHorizontal: 12, paddingVertical: 8, borderRadius: 16, marginRight: 8, marginBottom: 8 },
-  skillText: { fontSize: 14, color: '#333' },
-  addButton: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 10, borderWidth: 1, borderColor: '#007AFF', borderRadius: 8, borderStyle: 'dashed' },
-  addButtonText: { color: '#007AFF', marginLeft: 5, fontWeight: '600' },
-  linkItem: { flexDirection: 'row', alignItems: 'center', paddingVertical: 15, borderBottomWidth: 1, borderBottomColor: '#f0f0f0' },
-  linkText: { flex: 1, marginLeft: 15, fontSize: 16, color: '#333' },
+  skillTag: { backgroundColor: theme.inputBg, paddingHorizontal: 12, paddingVertical: 8, borderRadius: theme.radiusLg, marginRight: 8, marginBottom: 8 },
+  skillText: { fontSize: 14, fontFamily: theme.fontFamily, color: theme.text },
+  addButton: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 10, borderWidth: 1, borderColor: theme.primary, borderRadius: theme.radiusSm, borderStyle: 'dashed' },
+  addButtonText: { color: theme.primary, marginLeft: 5, fontFamily: theme.fontFamilySemiBold },
+  linkItem: { flexDirection: 'row', alignItems: 'center', paddingVertical: 15, borderBottomWidth: 1, borderBottomColor: theme.border },
+  linkText: { flex: 1, marginLeft: 15, fontSize: 16, fontFamily: theme.fontFamily, color: theme.text },
   editLinksButton: { marginTop: 12, paddingVertical: 8 },
-  editLinksButtonText: { color: '#007AFF', fontSize: 14, fontWeight: '600' },
-  achievementCard: { width: 120, backgroundColor: '#f9f9f9', padding: 15, borderRadius: 8, marginRight: 10, alignItems: 'center' },
+  editLinksButtonText: { color: theme.primary, fontSize: 14, fontFamily: theme.fontFamilySemiBold },
+  achievementCard: { width: 120, backgroundColor: theme.inputBg, padding: 15, borderRadius: theme.radiusSm, marginRight: 10, alignItems: 'center' },
   achievementIcon: { fontSize: 40, marginBottom: 10 },
-  achievementTitle: { fontSize: 14, fontWeight: 'bold', textAlign: 'center', marginBottom: 5 },
-  achievementDate: { fontSize: 12, color: '#666' },
-  menuItem: { flexDirection: 'row', alignItems: 'center', paddingVertical: 15, borderBottomWidth: 1, borderBottomColor: '#f0f0f0' },
-  menuText: { flex: 1, marginLeft: 15, fontSize: 16 },
-  logoutText: { color: '#FF3B30' },
-  emptySectionText: { fontSize: 14, color: '#999', marginBottom: 10 },
-  modalOverlay: { flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'flex-end' },
-  modalContent: { backgroundColor: '#fff', borderTopLeftRadius: 20, borderTopRightRadius: 20, padding: 20, paddingBottom: 40 },
+  achievementTitle: { fontSize: 14, fontFamily: theme.fontFamilySemiBold, textAlign: 'center', marginBottom: 5, color: theme.text },
+  achievementDate: { fontSize: 12, fontFamily: theme.fontFamily, color: theme.textSecondary },
+  menuItem: { flexDirection: 'row', alignItems: 'center', paddingVertical: 15, borderBottomWidth: 1, borderBottomColor: theme.border },
+  menuText: { flex: 1, marginLeft: 15, fontSize: 16, fontFamily: theme.fontFamily, color: theme.text },
+  logoutText: { color: theme.error },
+  emptySectionText: { fontSize: 14, fontFamily: theme.fontFamily, color: theme.textMuted, marginBottom: 10 },
+  modalOverlay: { flex: 1, backgroundColor: theme.overlay, justifyContent: 'flex-end' },
+  modalContent: { backgroundColor: theme.surface, borderTopLeftRadius: theme.radiusXl, borderTopRightRadius: theme.radiusXl, padding: 20, paddingBottom: 40 },
   modalHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 },
-  modalTitle: { fontSize: 22, fontWeight: 'bold' },
-  input: { borderWidth: 1, borderColor: '#e0e0e0', borderRadius: 12, padding: 14, fontSize: 16, marginBottom: 12 },
+  modalTitle: { fontSize: 22, fontFamily: theme.fontFamilyBold, color: theme.text },
+  input: { borderWidth: 1, borderColor: theme.border, borderRadius: theme.radius, padding: 14, fontSize: 16, fontFamily: theme.fontFamily, marginBottom: 12, color: theme.text, backgroundColor: theme.inputBg },
   textArea: { minHeight: 80, textAlignVertical: 'top' },
-  inputLabel: { fontSize: 14, color: '#666', marginBottom: 6 },
-  saveButton: { backgroundColor: '#007AFF', padding: 16, borderRadius: 12, alignItems: 'center' },
-  saveButtonText: { color: '#fff', fontWeight: 'bold', fontSize: 16 },
-  skillHint: { fontSize: 12, color: '#666', marginBottom: 10 },
+  inputLabel: { fontSize: 14, fontFamily: theme.fontFamily, color: theme.textSecondary, marginBottom: 6 },
+  saveButton: { backgroundColor: theme.primary, padding: 16, borderRadius: theme.radius, alignItems: 'center' },
+  saveButtonText: { color: theme.textOnPrimary, fontFamily: theme.fontFamilySemiBold, fontSize: 16 },
+  skillHint: { fontSize: 12, fontFamily: theme.fontFamily, color: theme.textSecondary, marginBottom: 10 },
   skillModalContent: { maxHeight: '80%' },
   skillList: { maxHeight: 320 },
-  skillListItem: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 14, paddingHorizontal: 4, borderBottomWidth: 1, borderBottomColor: '#f0f0f0' },
-  skillListItemText: { fontSize: 16, color: '#333' },
+  skillListItem: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 14, paddingHorizontal: 4, borderBottomWidth: 1, borderBottomColor: theme.border },
+  skillListItemText: { fontSize: 16, fontFamily: theme.fontFamily, color: theme.text },
 });
 
 export default ProfileScreen;

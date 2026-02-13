@@ -11,7 +11,8 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import Feather from '@expo/vector-icons/Feather';
+import theme from '../theme';
 
 const statusOptions = ['Planning', 'In Progress', 'Completed'];
 
@@ -69,8 +70,8 @@ const ProjectsScreen = () => {
       </View>
       <Text style={styles.projectDescription} numberOfLines={2}>{item.description}</Text>
       <View style={styles.projectInfo}>
-        <View style={styles.infoItem}>
-          <Ionicons name="people-outline" size={16} color="#666" />
+          <View style={styles.infoItem}>
+          <Feather name="users" size={16} color={theme.textSecondary} />
           <Text style={styles.infoText}>{item.members} members</Text>
         </View>
       </View>
@@ -90,7 +91,7 @@ const ProjectsScreen = () => {
       <View style={styles.header}>
         <Text style={styles.headerTitle}>My Projects</Text>
         <TouchableOpacity style={styles.addButton} onPress={() => setModalVisible(true)}>
-          <Ionicons name="add-circle" size={28} color="#007AFF" />
+          <Feather name="plus-circle" size={28} color={theme.primary} />
         </TouchableOpacity>
       </View>
       <FlatList
@@ -100,7 +101,7 @@ const ProjectsScreen = () => {
         contentContainerStyle={styles.listContainer}
         ListEmptyComponent={
           <View style={styles.emptyContainer}>
-            <Ionicons name="folder-outline" size={64} color="#ccc" />
+            <Feather name="folder" size={64} color={theme.textMuted} />
             <Text style={styles.emptyText}>No projects yet</Text>
             <Text style={styles.emptySubtext}>
               Tap + to create your first project
@@ -123,20 +124,20 @@ const ProjectsScreen = () => {
             <View style={styles.modalHeader}>
               <Text style={styles.modalTitle}>New Project</Text>
               <TouchableOpacity onPress={() => setModalVisible(false)}>
-                <Ionicons name="close" size={28} color="#666" />
+                <Feather name="x" size={28} color={theme.textMuted} />
               </TouchableOpacity>
             </View>
             <TextInput
               style={styles.input}
               placeholder="Project title"
-              placeholderTextColor="#999"
+              placeholderTextColor={theme.textMuted}
               value={title}
               onChangeText={setTitle}
             />
             <TextInput
               style={[styles.input, styles.textArea]}
               placeholder="Description (optional)"
-              placeholderTextColor="#999"
+              placeholderTextColor={theme.textMuted}
               value={description}
               onChangeText={setDescription}
               multiline
@@ -166,20 +167,21 @@ const ProjectsScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: theme.background,
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 15,
-    backgroundColor: '#fff',
+    backgroundColor: theme.surface,
     borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
+    borderBottomColor: theme.border,
   },
   headerTitle: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontFamily: theme.fontFamilyBold,
+    color: theme.text,
   },
   addButton: {
     padding: 5,
@@ -188,13 +190,13 @@ const styles = StyleSheet.create({
     padding: 15,
   },
   projectCard: {
-    backgroundColor: '#fff',
+    backgroundColor: theme.card,
     padding: 15,
     marginBottom: 15,
-    borderRadius: 8,
-    shadowColor: '#000',
+    borderRadius: theme.radiusSm,
+    shadowColor: theme.shadow,
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.3,
     shadowRadius: 4,
     elevation: 3,
   },
@@ -206,32 +208,33 @@ const styles = StyleSheet.create({
   },
   projectTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontFamily: theme.fontFamilySemiBold,
     flex: 1,
+    color: theme.text,
   },
   statusBadge: {
     paddingHorizontal: 10,
     paddingVertical: 4,
-    borderRadius: 12,
-    backgroundColor: '#e0e0e0',
+    borderRadius: theme.radius,
+    backgroundColor: theme.inputBg,
   },
   statusInProgress: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: theme.secondary,
   },
   statusPlanning: {
-    backgroundColor: '#FF9800',
+    backgroundColor: theme.warning,
   },
   statusCompleted: {
-    backgroundColor: '#2196F3',
+    backgroundColor: theme.primary,
   },
   statusText: {
-    color: '#fff',
+    color: theme.textOnPrimary,
     fontSize: 12,
-    fontWeight: 'bold',
+    fontFamily: theme.fontFamilySemiBold,
   },
   projectDescription: {
     fontSize: 14,
-    color: '#666',
+    color: theme.textSecondary,
     marginBottom: 15,
     lineHeight: 20,
   },
@@ -246,7 +249,7 @@ const styles = StyleSheet.create({
   },
   infoText: {
     marginLeft: 5,
-    color: '#666',
+    color: theme.textSecondary,
     fontSize: 14,
   },
   progressContainer: {
@@ -256,20 +259,20 @@ const styles = StyleSheet.create({
   progressBar: {
     flex: 1,
     height: 8,
-    backgroundColor: '#e0e0e0',
+    backgroundColor: theme.inputBg,
     borderRadius: 4,
     marginRight: 10,
     overflow: 'hidden',
   },
   progressFill: {
     height: '100%',
-    backgroundColor: '#007AFF',
+    backgroundColor: theme.primary,
     borderRadius: 4,
   },
   progressText: {
     fontSize: 12,
-    color: '#666',
-    fontWeight: 'bold',
+    fontFamily: theme.fontFamily,
+    color: theme.textSecondary,
   },
   emptyContainer: {
     alignItems: 'center',
@@ -279,23 +282,23 @@ const styles = StyleSheet.create({
   emptyText: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#666',
+    color: theme.textSecondary,
     marginTop: 15,
   },
   emptySubtext: {
     fontSize: 14,
-    color: '#999',
+    color: theme.textMuted,
     marginTop: 5,
   },
   modalOverlay: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    backgroundColor: theme.overlay,
     justifyContent: 'flex-end',
   },
   modalContent: {
-    backgroundColor: '#fff',
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
+    backgroundColor: theme.surface,
+    borderTopLeftRadius: theme.radiusXl,
+    borderTopRightRadius: theme.radiusXl,
     padding: 20,
     paddingBottom: 40,
   },
@@ -307,15 +310,19 @@ const styles = StyleSheet.create({
   },
   modalTitle: {
     fontSize: 22,
-    fontWeight: 'bold',
+    fontFamily: theme.fontFamilyBold,
+    color: theme.text,
   },
   input: {
     borderWidth: 1,
-    borderColor: '#e0e0e0',
-    borderRadius: 12,
+    borderColor: theme.border,
+    borderRadius: theme.radius,
     padding: 14,
     fontSize: 16,
     marginBottom: 12,
+    fontFamily: theme.fontFamily,
+    color: theme.text,
+    backgroundColor: theme.inputBg,
   },
   textArea: {
     minHeight: 80,
@@ -323,8 +330,8 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 14,
-    fontWeight: '600',
-    color: '#666',
+    fontFamily: theme.fontFamilySemiBold,
+    color: theme.textSecondary,
     marginBottom: 8,
   },
   statusRow: {
@@ -336,30 +343,30 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 8,
     borderRadius: 20,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: theme.inputBg,
     marginRight: 8,
     marginBottom: 8,
   },
   statusChipActive: {
-    backgroundColor: '#007AFF',
+    backgroundColor: theme.primary,
   },
   statusChipText: {
-    color: '#666',
+    color: theme.textSecondary,
     fontSize: 14,
   },
   statusChipTextActive: {
-    color: '#fff',
-    fontWeight: 'bold',
+    color: theme.textOnPrimary,
+    fontFamily: theme.fontFamilySemiBold,
   },
   saveButton: {
-    backgroundColor: '#007AFF',
+    backgroundColor: theme.primary,
     padding: 16,
-    borderRadius: 12,
+    borderRadius: theme.radius,
     alignItems: 'center',
   },
   saveButtonText: {
-    color: '#fff',
-    fontWeight: 'bold',
+    color: theme.textOnPrimary,
+    fontFamily: theme.fontFamilySemiBold,
     fontSize: 16,
   },
 });

@@ -11,7 +11,8 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import Feather from '@expo/vector-icons/Feather';
+import theme from '../theme';
 
 const statusOptions = ['All', 'Upcoming', 'Ongoing'];
 
@@ -87,19 +88,19 @@ const HackathonsScreen = () => {
       </View>
       <View style={styles.hackathonInfo}>
         <View style={styles.infoRow}>
-          <Ionicons name="calendar-outline" size={16} color="#666" />
+          <Feather name="calendar" size={16} color={theme.textSecondary} />
           <Text style={styles.infoText}>{item.date}</Text>
         </View>
         <View style={styles.infoRow}>
-          <Ionicons name="location-outline" size={16} color="#666" />
+          <Feather name="map-pin" size={16} color={theme.textSecondary} />
           <Text style={styles.infoText}>{item.location}</Text>
         </View>
         <View style={styles.infoRow}>
-          <Ionicons name="trophy-outline" size={16} color="#FFD700" />
+          <Feather name="award" size={16} color={theme.primary} />
           <Text style={styles.infoText}>{item.prize} Prize Pool</Text>
         </View>
         <View style={styles.infoRow}>
-          <Ionicons name="people-outline" size={16} color="#666" />
+          <Feather name="users" size={16} color={theme.textSecondary} />
           <Text style={styles.infoText}>{item.teamSize}</Text>
         </View>
       </View>
@@ -120,10 +121,10 @@ const HackathonsScreen = () => {
         <Text style={styles.headerTitle}>Hackathons</Text>
         <View style={styles.headerButtons}>
           <TouchableOpacity style={styles.headerButton} onPress={() => setFilterModalVisible(true)}>
-            <Ionicons name="filter-outline" size={24} color="#007AFF" />
+            <Feather name="filter" size={24} color={theme.primary} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.headerButton} onPress={() => setModalVisible(true)}>
-            <Ionicons name="add-circle-outline" size={24} color="#007AFF" />
+            <Feather name="plus-circle" size={24} color={theme.primary} />
           </TouchableOpacity>
         </View>
       </View>
@@ -134,7 +135,7 @@ const HackathonsScreen = () => {
         contentContainerStyle={styles.listContainer}
         ListEmptyComponent={
           <View style={styles.emptyContainer}>
-            <Ionicons name="trophy-outline" size={64} color="#ccc" />
+            <Feather name="award" size={64} color={theme.textMuted} />
             <Text style={styles.emptyText}>No hackathons yet</Text>
             <Text style={styles.emptySubtext}>Tap + to add one, or check back later</Text>
           </View>
@@ -174,14 +175,14 @@ const HackathonsScreen = () => {
             <View style={styles.modalHeader}>
               <Text style={styles.modalTitle}>Add Hackathon</Text>
               <TouchableOpacity onPress={() => setModalVisible(false)}>
-                <Ionicons name="close" size={28} color="#666" />
+                <Feather name="x" size={28} color={theme.textMuted} />
               </TouchableOpacity>
             </View>
-            <TextInput style={styles.input} placeholder="Title" placeholderTextColor="#999" value={title} onChangeText={setTitle} />
-            <TextInput style={styles.input} placeholder="Date (e.g. March 15-17, 2024)" placeholderTextColor="#999" value={date} onChangeText={setDate} />
-            <TextInput style={styles.input} placeholder="Location (e.g. Online)" placeholderTextColor="#999" value={location} onChangeText={setLocation} />
-            <TextInput style={styles.input} placeholder="Prize (e.g. $10,000)" placeholderTextColor="#999" value={prize} onChangeText={setPrize} />
-            <TextInput style={styles.input} placeholder="Team size (e.g. 2-4 members)" placeholderTextColor="#999" value={teamSize} onChangeText={setTeamSize} />
+            <TextInput style={styles.input} placeholder="Title" placeholderTextColor={theme.textMuted} value={title} onChangeText={setTitle} />
+            <TextInput style={styles.input} placeholder="Date (e.g. March 15-17, 2024)" placeholderTextColor={theme.textMuted} value={date} onChangeText={setDate} />
+            <TextInput style={styles.input} placeholder="Location (e.g. Online)" placeholderTextColor={theme.textMuted} value={location} onChangeText={setLocation} />
+            <TextInput style={styles.input} placeholder="Prize (e.g. $10,000)" placeholderTextColor={theme.textMuted} value={prize} onChangeText={setPrize} />
+            <TextInput style={styles.input} placeholder="Team size (e.g. 2-4 members)" placeholderTextColor={theme.textMuted} value={teamSize} onChangeText={setTeamSize} />
             <Text style={styles.label}>Status</Text>
             <View style={styles.statusRow}>
               {['Upcoming', 'Ongoing'].map((s) => (
@@ -205,28 +206,28 @@ const HackathonsScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#f5f5f5' },
+  container: { flex: 1, backgroundColor: theme.background },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 15,
-    backgroundColor: '#fff',
+    backgroundColor: theme.surface,
     borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
+    borderBottomColor: theme.border,
   },
-  headerTitle: { fontSize: 24, fontWeight: 'bold' },
+  headerTitle: { fontSize: 24, fontFamily: theme.fontFamilyBold, color: theme.text },
   headerButtons: { flexDirection: 'row' },
   headerButton: { padding: 5, marginLeft: 10 },
   listContainer: { padding: 15 },
   hackathonCard: {
-    backgroundColor: '#fff',
+    backgroundColor: theme.card,
     padding: 15,
     marginBottom: 15,
-    borderRadius: 8,
-    shadowColor: '#000',
+    borderRadius: theme.radiusSm,
+    shadowColor: theme.shadow,
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.3,
     shadowRadius: 4,
     elevation: 3,
   },
@@ -236,51 +237,51 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     marginBottom: 15,
   },
-  hackathonTitle: { fontSize: 18, fontWeight: 'bold', flex: 1, marginRight: 10 },
-  statusBadge: { paddingHorizontal: 10, paddingVertical: 4, borderRadius: 12, backgroundColor: '#e0e0e0' },
-  statusOngoing: { backgroundColor: '#4CAF50' },
-  statusUpcoming: { backgroundColor: '#2196F3' },
-  statusText: { color: '#fff', fontSize: 12, fontWeight: 'bold' },
+  hackathonTitle: { fontSize: 18, fontFamily: theme.fontFamilySemiBold, flex: 1, marginRight: 10, color: theme.text },
+  statusBadge: { paddingHorizontal: 10, paddingVertical: 4, borderRadius: theme.radius, backgroundColor: theme.inputBg },
+  statusOngoing: { backgroundColor: theme.secondary },
+  statusUpcoming: { backgroundColor: theme.primary },
+  statusText: { color: theme.textOnPrimary, fontSize: 12, fontFamily: theme.fontFamilySemiBold },
   hackathonInfo: { marginBottom: 15 },
   infoRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 8 },
-  infoText: { marginLeft: 8, color: '#666', fontSize: 14 },
+  infoText: { marginLeft: 8, fontFamily: theme.fontFamily, color: theme.textSecondary, fontSize: 14 },
   actionButtons: { flexDirection: 'row', gap: 10 },
   viewButton: {
     flex: 1,
     padding: 12,
     borderWidth: 1,
-    borderColor: '#007AFF',
-    borderRadius: 8,
+    borderColor: theme.primary,
+    borderRadius: theme.radiusSm,
     alignItems: 'center',
   },
-  viewButtonText: { color: '#007AFF', fontWeight: 'bold' },
-  joinButton: { flex: 1, padding: 12, backgroundColor: '#007AFF', borderRadius: 8, alignItems: 'center' },
-  joinButtonText: { color: '#fff', fontWeight: 'bold' },
+  viewButtonText: { color: theme.primary, fontFamily: theme.fontFamilySemiBold },
+  joinButton: { flex: 1, padding: 12, backgroundColor: theme.primary, borderRadius: theme.radiusSm, alignItems: 'center' },
+  joinButtonText: { color: theme.textOnPrimary, fontFamily: theme.fontFamilySemiBold },
   emptyContainer: { alignItems: 'center', justifyContent: 'center', paddingVertical: 60 },
-  emptyText: { fontSize: 18, fontWeight: 'bold', color: '#666', marginTop: 15 },
-  emptySubtext: { fontSize: 14, color: '#999', marginTop: 5 },
-  filterOverlay: { flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'center', padding: 20 },
-  filterContent: { backgroundColor: '#fff', borderRadius: 16, padding: 20 },
-  filterTitle: { fontSize: 18, fontWeight: 'bold', marginBottom: 16 },
-  filterOption: { padding: 14, borderRadius: 8, marginBottom: 8, backgroundColor: '#f5f5f5' },
-  filterOptionActive: { backgroundColor: '#007AFF' },
-  filterOptionText: { fontSize: 16, color: '#333' },
-  filterOptionTextActive: { color: '#fff', fontWeight: 'bold' },
+  emptyText: { fontSize: 18, fontFamily: theme.fontFamilySemiBold, color: theme.textSecondary, marginTop: 15 },
+  emptySubtext: { fontSize: 14, fontFamily: theme.fontFamily, color: theme.textMuted, marginTop: 5 },
+  filterOverlay: { flex: 1, backgroundColor: theme.overlay, justifyContent: 'center', padding: 20 },
+  filterContent: { backgroundColor: theme.surface, borderRadius: theme.radiusLg, padding: 20 },
+  filterTitle: { fontSize: 18, fontFamily: theme.fontFamilySemiBold, marginBottom: 16, color: theme.text },
+  filterOption: { padding: 14, borderRadius: theme.radiusSm, marginBottom: 8, backgroundColor: theme.inputBg },
+  filterOptionActive: { backgroundColor: theme.primary },
+  filterOptionText: { fontSize: 16, fontFamily: theme.fontFamily, color: theme.text },
+  filterOptionTextActive: { color: theme.textOnPrimary, fontFamily: theme.fontFamilySemiBold },
   filterCancel: { marginTop: 12, alignItems: 'center' },
-  filterCancelText: { color: '#666', fontSize: 16 },
-  modalOverlay: { flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'flex-end' },
-  modalContent: { backgroundColor: '#fff', borderTopLeftRadius: 20, borderTopRightRadius: 20, padding: 20, paddingBottom: 40 },
+  filterCancelText: { color: theme.textSecondary, fontSize: 16, fontFamily: theme.fontFamily },
+  modalOverlay: { flex: 1, backgroundColor: theme.overlay, justifyContent: 'flex-end' },
+  modalContent: { backgroundColor: theme.surface, borderTopLeftRadius: theme.radiusXl, borderTopRightRadius: theme.radiusXl, padding: 20, paddingBottom: 40 },
   modalHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 },
-  modalTitle: { fontSize: 22, fontWeight: 'bold' },
-  input: { borderWidth: 1, borderColor: '#e0e0e0', borderRadius: 12, padding: 14, fontSize: 16, marginBottom: 12 },
-  label: { fontSize: 14, fontWeight: '600', color: '#666', marginBottom: 8 },
+  modalTitle: { fontSize: 22, fontFamily: theme.fontFamilyBold, color: theme.text },
+  input: { borderWidth: 1, borderColor: theme.border, borderRadius: theme.radius, padding: 14, fontSize: 16, fontFamily: theme.fontFamily, marginBottom: 12, color: theme.text, backgroundColor: theme.inputBg },
+  label: { fontSize: 14, fontFamily: theme.fontFamilySemiBold, color: theme.textSecondary, marginBottom: 8 },
   statusRow: { flexDirection: 'row', marginBottom: 20 },
-  statusChip: { paddingHorizontal: 14, paddingVertical: 8, borderRadius: 20, backgroundColor: '#f0f0f0', marginRight: 8 },
-  statusChipActive: { backgroundColor: '#007AFF' },
-  statusChipText: { color: '#666', fontSize: 14 },
-  statusChipTextActive: { color: '#fff', fontWeight: 'bold' },
-  saveButton: { backgroundColor: '#007AFF', padding: 16, borderRadius: 12, alignItems: 'center' },
-  saveButtonText: { color: '#fff', fontWeight: 'bold', fontSize: 16 },
+  statusChip: { paddingHorizontal: 14, paddingVertical: 8, borderRadius: 20, backgroundColor: theme.inputBg, marginRight: 8 },
+  statusChipActive: { backgroundColor: theme.primary },
+  statusChipText: { color: theme.textSecondary, fontSize: 14, fontFamily: theme.fontFamily },
+  statusChipTextActive: { color: theme.textOnPrimary, fontFamily: theme.fontFamilySemiBold },
+  saveButton: { backgroundColor: theme.primary, padding: 16, borderRadius: theme.radius, alignItems: 'center' },
+  saveButtonText: { color: theme.textOnPrimary, fontFamily: theme.fontFamilySemiBold, fontSize: 16 },
 });
 
 export default HackathonsScreen;

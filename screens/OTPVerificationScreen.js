@@ -10,8 +10,9 @@ import {
   Alert,
   ActivityIndicator,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import Feather from '@expo/vector-icons/Feather';
 import { useAuth } from '../contexts/AuthContext';
+import theme from '../theme';
 
 const OTPVerificationScreen = ({ route, navigation }) => {
   const { email } = route.params || {};
@@ -113,12 +114,12 @@ const OTPVerificationScreen = ({ route, navigation }) => {
           style={styles.backButton}
           onPress={() => navigation.goBack()}
         >
-          <Ionicons name="arrow-back" size={24} color="#333" />
+          <Feather name="arrow-left" size={24} color={theme.text} />
         </TouchableOpacity>
 
         <View style={styles.header}>
           <View style={styles.iconContainer}>
-            <Ionicons name="mail" size={64} color="#007AFF" />
+            <Feather name="mail" size={64} color={theme.primary} />
           </View>
           <Text style={styles.title}>Verify Your Email</Text>
           <Text style={styles.subtitle}>
@@ -150,7 +151,7 @@ const OTPVerificationScreen = ({ route, navigation }) => {
           disabled={loading}
         >
           {loading ? (
-            <ActivityIndicator color="#fff" />
+            <ActivityIndicator color={theme.textOnPrimary} />
           ) : (
             <Text style={styles.buttonText}>Verify OTP</Text>
           )}
@@ -163,7 +164,7 @@ const OTPVerificationScreen = ({ route, navigation }) => {
             disabled={resending || loading}
           >
             {resending ? (
-              <ActivityIndicator size="small" color="#007AFF" />
+              <ActivityIndicator size="small" color={theme.primary} />
             ) : (
               <Text style={styles.resendLink}>Resend OTP</Text>
             )}
@@ -177,7 +178,7 @@ const OTPVerificationScreen = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: theme.background,
   },
   content: {
     flex: 1,
@@ -200,27 +201,28 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     borderRadius: 50,
-    backgroundColor: '#e3f2fd',
+    backgroundColor: theme.surface,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 20,
   },
   title: {
     fontSize: 28,
-    fontWeight: 'bold',
-    color: '#333',
+    fontFamily: theme.fontFamilyBold,
+    color: theme.text,
     marginBottom: 12,
   },
   subtitle: {
     fontSize: 16,
-    color: '#666',
+    fontFamily: theme.fontFamily,
+    color: theme.textSecondary,
     textAlign: 'center',
     marginBottom: 8,
   },
   email: {
     fontSize: 16,
-    color: '#007AFF',
-    fontWeight: '600',
+    fontFamily: theme.fontFamilySemiBold,
+    color: theme.primary,
   },
   otpContainer: {
     flexDirection: 'row',
@@ -232,18 +234,18 @@ const styles = StyleSheet.create({
     width: 45,
     height: 55,
     borderWidth: 2,
-    borderColor: '#e0e0e0',
-    borderRadius: 12,
+    borderColor: theme.border,
+    borderRadius: theme.radius,
     textAlign: 'center',
     fontSize: 24,
-    fontWeight: 'bold',
-    color: '#333',
-    backgroundColor: '#fff',
+    fontFamily: theme.fontFamilyBold,
+    color: theme.text,
+    backgroundColor: theme.inputBg,
   },
   button: {
-    backgroundColor: '#007AFF',
+    backgroundColor: theme.primary,
     padding: 16,
-    borderRadius: 12,
+    borderRadius: theme.radius,
     alignItems: 'center',
     marginBottom: 20,
   },
@@ -251,9 +253,9 @@ const styles = StyleSheet.create({
     opacity: 0.6,
   },
   buttonText: {
-    color: '#fff',
+    color: theme.textOnPrimary,
     fontSize: 16,
-    fontWeight: 'bold',
+    fontFamily: theme.fontFamilySemiBold,
   },
   resendContainer: {
     flexDirection: 'row',
@@ -262,12 +264,13 @@ const styles = StyleSheet.create({
   },
   resendText: {
     fontSize: 14,
-    color: '#666',
+    fontFamily: theme.fontFamily,
+    color: theme.textSecondary,
   },
   resendLink: {
     fontSize: 14,
-    color: '#007AFF',
-    fontWeight: 'bold',
+    fontFamily: theme.fontFamilySemiBold,
+    color: theme.primary,
   },
 });
 

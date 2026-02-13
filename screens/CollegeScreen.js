@@ -11,8 +11,9 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import Feather from '@expo/vector-icons/Feather';
 import { useAuth } from '../contexts/AuthContext';
+import theme from '../theme';
 
 const typeOptions = [
   { key: 'placement', label: 'Placement' },
@@ -33,11 +34,11 @@ const CollegeScreen = () => {
 
   const getIcon = (t) => {
     switch (t) {
-      case 'placement': return 'briefcase-outline';
-      case 'workshop': return 'school-outline';
-      case 'event': return 'calendar-outline';
-      case 'opportunity': return 'star-outline';
-      default: return 'information-circle-outline';
+      case 'placement': return 'briefcase';
+      case 'workshop': return 'book-open';
+      case 'event': return 'calendar';
+      case 'opportunity': return 'star';
+      default: return 'info';
     }
   };
 
@@ -69,8 +70,8 @@ const CollegeScreen = () => {
   const renderAnnouncement = ({ item }) => (
     <TouchableOpacity style={styles.announcementCard} onPress={() => handleAnnouncementPress(item)} activeOpacity={0.7}>
       <View style={styles.announcementHeader}>
-        <View style={styles.iconContainer}>
-          <Ionicons name={getIcon(item.type)} size={24} color="#007AFF" />
+          <View style={styles.iconContainer}>
+          <Feather name={getIcon(item.type)} size={24} color={theme.primary} />
         </View>
         <View style={styles.announcementContent}>
           <Text style={styles.announcementTitle}>{item.title}</Text>
@@ -85,12 +86,12 @@ const CollegeScreen = () => {
     <View style={styles.container}>
       <View style={styles.header}>
         <View style={styles.headerContent}>
-          <Ionicons name="school" size={28} color="#007AFF" />
+          <Feather name="book-open" size={28} color={theme.primary} />
           <Text style={styles.headerTitle}>College Page</Text>
         </View>
         <Text style={styles.collegeName}>{collegeName}</Text>
         <TouchableOpacity style={styles.addButton} onPress={() => setModalVisible(true)}>
-          <Ionicons name="add-circle" size={28} color="#fff" />
+          <Feather name="plus-circle" size={28} color={theme.textOnPrimary} />
           <Text style={styles.addButtonText}>Add announcement</Text>
         </TouchableOpacity>
       </View>
@@ -110,7 +111,7 @@ const CollegeScreen = () => {
         contentContainerStyle={styles.listContainer}
         ListEmptyComponent={
           <View style={styles.emptyContainer}>
-            <Ionicons name="megaphone-outline" size={64} color="#ccc" />
+            <Feather name="volume-2" size={64} color={theme.textMuted} />
             <Text style={styles.emptyText}>No announcements yet</Text>
             <Text style={styles.emptySubtext}>Tap "Add announcement" to post one</Text>
           </View>
@@ -123,14 +124,14 @@ const CollegeScreen = () => {
             <View style={styles.modalHeader}>
               <Text style={styles.modalTitle}>New Announcement</Text>
               <TouchableOpacity onPress={() => setModalVisible(false)}>
-                <Ionicons name="close" size={28} color="#666" />
+                <Feather name="x" size={28} color={theme.textMuted} />
               </TouchableOpacity>
             </View>
-            <TextInput style={styles.input} placeholder="Title" placeholderTextColor="#999" value={title} onChangeText={setTitle} />
+            <TextInput style={styles.input} placeholder="Title" placeholderTextColor={theme.textMuted} value={title} onChangeText={setTitle} />
             <TextInput
               style={[styles.input, styles.textArea]}
               placeholder="Content (optional)"
-              placeholderTextColor="#999"
+              placeholderTextColor={theme.textMuted}
               value={content}
               onChangeText={setContent}
               multiline
@@ -158,54 +159,54 @@ const CollegeScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#f5f5f5' },
-  header: { backgroundColor: '#007AFF', padding: 20, paddingTop: 30 },
+  container: { flex: 1, backgroundColor: theme.background },
+  header: { backgroundColor: theme.surface, padding: 20, paddingTop: 30, borderBottomWidth: 1, borderBottomColor: theme.border },
   headerContent: { flexDirection: 'row', alignItems: 'center', marginBottom: 10 },
-  headerTitle: { fontSize: 24, fontWeight: 'bold', color: '#fff', marginLeft: 10 },
-  collegeName: { fontSize: 16, color: '#fff', opacity: 0.9, marginBottom: 12 },
-  addButton: { flexDirection: 'row', alignItems: 'center' },
-  addButtonText: { color: '#fff', marginLeft: 6, fontSize: 16 },
-  statsContainer: { flexDirection: 'row', backgroundColor: '#fff', padding: 20, justifyContent: 'space-around', borderBottomWidth: 1, borderBottomColor: '#e0e0e0' },
+  headerTitle: { fontSize: 24, fontFamily: theme.fontFamilyBold, color: theme.text, marginLeft: 10 },
+  collegeName: { fontSize: 16, fontFamily: theme.fontFamily, color: theme.textSecondary, marginBottom: 12 },
+  addButton: { flexDirection: 'row', alignItems: 'center', paddingVertical: 10, paddingHorizontal: 14, backgroundColor: theme.primary, borderRadius: theme.radius },
+  addButtonText: { color: theme.textOnPrimary, marginLeft: 6, fontSize: 16, fontFamily: theme.fontFamilySemiBold },
+  statsContainer: { flexDirection: 'row', backgroundColor: theme.surface, padding: 20, justifyContent: 'space-around', borderBottomWidth: 1, borderBottomColor: theme.border },
   statItem: { alignItems: 'center' },
-  statNumber: { fontSize: 24, fontWeight: 'bold', color: '#007AFF' },
-  statLabel: { fontSize: 12, color: '#666', marginTop: 5 },
-  sectionHeader: { padding: 15, backgroundColor: '#fff', borderBottomWidth: 1, borderBottomColor: '#e0e0e0' },
-  sectionTitle: { fontSize: 18, fontWeight: 'bold' },
+  statNumber: { fontSize: 24, fontFamily: theme.fontFamilyBold, color: theme.primary },
+  statLabel: { fontSize: 12, fontFamily: theme.fontFamily, color: theme.textSecondary, marginTop: 5 },
+  sectionHeader: { padding: 15, backgroundColor: theme.surface, borderBottomWidth: 1, borderBottomColor: theme.border },
+  sectionTitle: { fontSize: 18, fontFamily: theme.fontFamilySemiBold, color: theme.text },
   listContainer: { padding: 15 },
   announcementCard: {
-    backgroundColor: '#fff',
+    backgroundColor: theme.card,
     padding: 15,
     marginBottom: 15,
-    borderRadius: 8,
-    shadowColor: '#000',
+    borderRadius: theme.radiusSm,
+    shadowColor: theme.shadow,
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.3,
     shadowRadius: 4,
     elevation: 3,
   },
   announcementHeader: { flexDirection: 'row', marginBottom: 10 },
-  iconContainer: { width: 40, height: 40, borderRadius: 20, backgroundColor: '#f0f0f0', justifyContent: 'center', alignItems: 'center', marginRight: 12 },
+  iconContainer: { width: 40, height: 40, borderRadius: 20, backgroundColor: theme.inputBg, justifyContent: 'center', alignItems: 'center', marginRight: 12 },
   announcementContent: { flex: 1 },
-  announcementTitle: { fontSize: 16, fontWeight: 'bold', marginBottom: 4 },
-  announcementDate: { fontSize: 12, color: '#999' },
-  announcementText: { fontSize: 14, color: '#666', lineHeight: 20 },
+  announcementTitle: { fontSize: 16, fontFamily: theme.fontFamilySemiBold, marginBottom: 4, color: theme.text },
+  announcementDate: { fontSize: 12, fontFamily: theme.fontFamily, color: theme.textMuted },
+  announcementText: { fontSize: 14, fontFamily: theme.fontFamily, color: theme.textSecondary, lineHeight: 20 },
   emptyContainer: { alignItems: 'center', justifyContent: 'center', paddingVertical: 60 },
-  emptyText: { fontSize: 18, fontWeight: 'bold', color: '#666', marginTop: 15 },
-  emptySubtext: { fontSize: 14, color: '#999', marginTop: 5 },
-  modalOverlay: { flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'flex-end' },
-  modalContent: { backgroundColor: '#fff', borderTopLeftRadius: 20, borderTopRightRadius: 20, padding: 20, paddingBottom: 40 },
+  emptyText: { fontSize: 18, fontFamily: theme.fontFamilySemiBold, color: theme.textSecondary, marginTop: 15 },
+  emptySubtext: { fontSize: 14, fontFamily: theme.fontFamily, color: theme.textMuted, marginTop: 5 },
+  modalOverlay: { flex: 1, backgroundColor: theme.overlay, justifyContent: 'flex-end' },
+  modalContent: { backgroundColor: theme.surface, borderTopLeftRadius: theme.radiusXl, borderTopRightRadius: theme.radiusXl, padding: 20, paddingBottom: 40 },
   modalHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 },
-  modalTitle: { fontSize: 22, fontWeight: 'bold' },
-  input: { borderWidth: 1, borderColor: '#e0e0e0', borderRadius: 12, padding: 14, fontSize: 16, marginBottom: 12 },
+  modalTitle: { fontSize: 22, fontFamily: theme.fontFamilyBold, color: theme.text },
+  input: { borderWidth: 1, borderColor: theme.border, borderRadius: theme.radius, padding: 14, fontSize: 16, fontFamily: theme.fontFamily, marginBottom: 12, color: theme.text, backgroundColor: theme.inputBg },
   textArea: { minHeight: 80, textAlignVertical: 'top' },
-  label: { fontSize: 14, fontWeight: '600', color: '#666', marginBottom: 8 },
+  label: { fontSize: 14, fontFamily: theme.fontFamilySemiBold, color: theme.textSecondary, marginBottom: 8 },
   typeRow: { flexDirection: 'row', flexWrap: 'wrap', marginBottom: 20 },
-  typeChip: { paddingHorizontal: 12, paddingVertical: 8, borderRadius: 20, backgroundColor: '#f0f0f0', marginRight: 8, marginBottom: 8 },
-  typeChipActive: { backgroundColor: '#007AFF' },
-  typeChipText: { color: '#666', fontSize: 14 },
-  typeChipTextActive: { color: '#fff', fontWeight: 'bold' },
-  saveButton: { backgroundColor: '#007AFF', padding: 16, borderRadius: 12, alignItems: 'center' },
-  saveButtonText: { color: '#fff', fontWeight: 'bold', fontSize: 16 },
+  typeChip: { paddingHorizontal: 12, paddingVertical: 8, borderRadius: 20, backgroundColor: theme.inputBg, marginRight: 8, marginBottom: 8 },
+  typeChipActive: { backgroundColor: theme.primary },
+  typeChipText: { color: theme.textSecondary, fontSize: 14, fontFamily: theme.fontFamily },
+  typeChipTextActive: { color: theme.textOnPrimary, fontFamily: theme.fontFamilySemiBold },
+  saveButton: { backgroundColor: theme.primary, padding: 16, borderRadius: theme.radius, alignItems: 'center' },
+  saveButtonText: { color: theme.textOnPrimary, fontFamily: theme.fontFamilySemiBold, fontSize: 16 },
 });
 
 export default CollegeScreen;

@@ -11,8 +11,9 @@ import {
   Alert,
   ActivityIndicator,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import Feather from '@expo/vector-icons/Feather';
 import { useAuth } from '../contexts/AuthContext';
+import theme from '../theme';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -96,7 +97,7 @@ const LoginScreen = ({ navigation }) => {
       >
         <View style={styles.header}>
           <View style={styles.logoContainer}>
-            <Ionicons name="rocket" size={64} color="#007AFF" />
+            <Feather name="zap" size={64} color={theme.primary} />
           </View>
           <Text style={styles.title}>ProLaunch Hub</Text>
           <Text style={styles.subtitle}>
@@ -113,16 +114,16 @@ const LoginScreen = ({ navigation }) => {
           </Text>
 
           <View style={styles.inputContainer}>
-            <Ionicons
-              name="mail-outline"
+            <Feather
+              name="mail"
               size={20}
-              color="#666"
+              color={theme.textMuted}
               style={styles.inputIcon}
             />
             <TextInput
               style={styles.input}
               placeholder="Email address"
-              placeholderTextColor="#999"
+              placeholderTextColor={theme.textMuted}
               value={email}
               onChangeText={setEmail}
               keyboardType="email-address"
@@ -134,16 +135,16 @@ const LoginScreen = ({ navigation }) => {
 
           {usePassword && (
             <View style={styles.inputContainer}>
-              <Ionicons
-                name="lock-closed-outline"
+              <Feather
+                name="lock"
                 size={20}
-                color="#666"
+                color={theme.textMuted}
                 style={styles.inputIcon}
               />
               <TextInput
                 style={styles.input}
                 placeholder="Password"
-                placeholderTextColor="#999"
+                placeholderTextColor={theme.textMuted}
                 value={password}
                 onChangeText={setPassword}
                 secureTextEntry={!showPassword}
@@ -153,10 +154,10 @@ const LoginScreen = ({ navigation }) => {
                 onPress={() => setShowPassword(!showPassword)}
                 style={styles.eyeIcon}
               >
-                <Ionicons
-                  name={showPassword ? 'eye-outline' : 'eye-off-outline'}
+                <Feather
+                  name={showPassword ? 'eye' : 'eye-off'}
                   size={20}
-                  color="#666"
+                  color={theme.textMuted}
                 />
               </TouchableOpacity>
             </View>
@@ -168,7 +169,7 @@ const LoginScreen = ({ navigation }) => {
             disabled={loading}
           >
             {loading ? (
-              <ActivityIndicator color="#fff" />
+              <ActivityIndicator color={theme.textOnPrimary} />
             ) : (
               <Text style={styles.buttonText}>
                 {usePassword ? 'Login' : 'Send OTP'}
@@ -212,7 +213,7 @@ const LoginScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: theme.background,
   },
   scrollContent: {
     flexGrow: 1,
@@ -227,52 +228,54 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     borderRadius: 50,
-    backgroundColor: '#e3f2fd',
+    backgroundColor: theme.surface,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 20,
   },
   title: {
     fontSize: 32,
-    fontWeight: 'bold',
-    color: '#333',
+    fontFamily: theme.fontFamilyBold,
+    color: theme.text,
     marginBottom: 8,
   },
   subtitle: {
     fontSize: 16,
-    color: '#666',
+    fontFamily: theme.fontFamily,
+    color: theme.textSecondary,
     textAlign: 'center',
   },
   formContainer: {
-    backgroundColor: '#fff',
-    borderRadius: 16,
+    backgroundColor: theme.card,
+    borderRadius: theme.radiusLg,
     padding: 24,
-    shadowColor: '#000',
+    shadowColor: theme.shadow,
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.3,
     shadowRadius: 8,
     elevation: 4,
   },
   formTitle: {
     fontSize: 24,
-    fontWeight: 'bold',
-    color: '#333',
+    fontFamily: theme.fontFamilyBold,
+    color: theme.text,
     marginBottom: 8,
   },
   formSubtitle: {
     fontSize: 14,
-    color: '#666',
+    fontFamily: theme.fontFamily,
+    color: theme.textSecondary,
     marginBottom: 24,
   },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#e0e0e0',
-    borderRadius: 12,
+    borderColor: theme.border,
+    borderRadius: theme.radius,
     marginBottom: 16,
     paddingHorizontal: 16,
-    backgroundColor: '#f9f9f9',
+    backgroundColor: theme.inputBg,
   },
   inputIcon: {
     marginRight: 12,
@@ -284,12 +287,13 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 50,
     fontSize: 16,
-    color: '#333',
+    fontFamily: theme.fontFamily,
+    color: theme.text,
   },
   button: {
-    backgroundColor: '#007AFF',
+    backgroundColor: theme.primary,
     padding: 16,
-    borderRadius: 12,
+    borderRadius: theme.radius,
     alignItems: 'center',
     marginTop: 8,
   },
@@ -297,9 +301,9 @@ const styles = StyleSheet.create({
     opacity: 0.6,
   },
   buttonText: {
-    color: '#fff',
+    color: theme.textOnPrimary,
     fontSize: 16,
-    fontWeight: 'bold',
+    fontFamily: theme.fontFamilySemiBold,
   },
   switchModeButton: {
     alignItems: 'center',
@@ -307,7 +311,7 @@ const styles = StyleSheet.create({
   },
   switchModeText: {
     fontSize: 14,
-    color: '#007AFF',
+    color: theme.primary,
   },
   divider: {
     flexDirection: 'row',
@@ -317,11 +321,11 @@ const styles = StyleSheet.create({
   dividerLine: {
     flex: 1,
     height: 1,
-    backgroundColor: '#e0e0e0',
+    backgroundColor: theme.border,
   },
   dividerText: {
     marginHorizontal: 16,
-    color: '#999',
+    color: theme.textMuted,
     fontSize: 14,
   },
   signUpButton: {
@@ -329,11 +333,11 @@ const styles = StyleSheet.create({
   },
   signUpButtonText: {
     fontSize: 14,
-    color: '#666',
+    color: theme.textSecondary,
   },
   signUpLink: {
-    color: '#007AFF',
-    fontWeight: 'bold',
+    color: theme.primary,
+    fontFamily: theme.fontFamilySemiBold,
   },
 });
 

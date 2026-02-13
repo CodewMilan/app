@@ -8,8 +8,9 @@ import {
   FlatList,
   Alert,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import Feather from '@expo/vector-icons/Feather';
 import { useAuth } from '../contexts/AuthContext';
+import theme from '../theme';
 
 const FeedScreen = () => {
   const [posts, setPosts] = useState([]);
@@ -66,15 +67,15 @@ const FeedScreen = () => {
           style={styles.actionButton}
           onPress={() => handleLike(item.id)}
         >
-          <Ionicons name="heart-outline" size={20} color="#666" />
+          <Feather name="heart" size={20} color={theme.textMuted} />
           <Text style={styles.actionText}>{item.likes}</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.actionButton} onPress={() => handleComment(item)}>
-          <Ionicons name="chatbubble-outline" size={20} color="#666" />
+          <Feather name="message-circle" size={20} color={theme.textMuted} />
           <Text style={styles.actionText}>{item.comments}</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.actionButton} onPress={() => handleShare(item)}>
-          <Ionicons name="share-outline" size={20} color="#666" />
+          <Feather name="share-2" size={20} color={theme.textMuted} />
         </TouchableOpacity>
       </View>
     </View>
@@ -86,6 +87,7 @@ const FeedScreen = () => {
         <TextInput
           style={styles.input}
           placeholder="What's on your mind?"
+          placeholderTextColor={theme.textMuted}
           value={newPost}
           onChangeText={setNewPost}
           multiline
@@ -101,7 +103,7 @@ const FeedScreen = () => {
         contentContainerStyle={styles.listContainer}
         ListEmptyComponent={
           <View style={styles.emptyContainer}>
-            <Ionicons name="newspaper-outline" size={64} color="#ccc" />
+            <Feather name="file-text" size={64} color={theme.textMuted} />
             <Text style={styles.emptyText}>No posts yet</Text>
             <Text style={styles.emptySubtext}>Share something with the community</Text>
           </View>
@@ -114,43 +116,46 @@ const FeedScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: theme.background,
   },
   createPostContainer: {
-    backgroundColor: '#fff',
+    backgroundColor: theme.surface,
     padding: 15,
     borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
+    borderBottomColor: theme.border,
   },
   input: {
     borderWidth: 1,
-    borderColor: '#e0e0e0',
-    borderRadius: 8,
+    borderColor: theme.border,
+    borderRadius: theme.radiusSm,
     padding: 12,
     marginBottom: 10,
     minHeight: 50,
+    fontFamily: theme.fontFamily,
+    color: theme.text,
+    backgroundColor: theme.inputBg,
   },
   postButton: {
-    backgroundColor: '#007AFF',
+    backgroundColor: theme.primary,
     padding: 12,
-    borderRadius: 8,
+    borderRadius: theme.radiusSm,
     alignItems: 'center',
   },
   postButtonText: {
-    color: '#fff',
-    fontWeight: 'bold',
+    color: theme.textOnPrimary,
+    fontFamily: theme.fontFamilySemiBold,
   },
   listContainer: {
     padding: 10,
   },
   postContainer: {
-    backgroundColor: '#fff',
+    backgroundColor: theme.card,
     padding: 15,
     marginBottom: 10,
-    borderRadius: 8,
-    shadowColor: '#000',
+    borderRadius: theme.radiusSm,
+    shadowColor: theme.shadow,
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.3,
     shadowRadius: 2,
     elevation: 2,
   },
@@ -163,37 +168,41 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: '#007AFF',
+    backgroundColor: theme.primary,
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 10,
   },
   avatarText: {
-    color: '#fff',
-    fontWeight: 'bold',
+    color: theme.textOnPrimary,
+    fontFamily: theme.fontFamilySemiBold,
     fontSize: 16,
   },
   postHeaderText: {
     flex: 1,
   },
   username: {
-    fontWeight: 'bold',
+    fontFamily: theme.fontFamilySemiBold,
     fontSize: 16,
+    color: theme.text,
   },
   time: {
-    color: '#666',
+    fontFamily: theme.fontFamily,
+    color: theme.textSecondary,
     fontSize: 12,
   },
   postContent: {
     fontSize: 15,
+    fontFamily: theme.fontFamily,
     lineHeight: 22,
     marginBottom: 10,
+    color: theme.text,
   },
   postActions: {
     flexDirection: 'row',
     paddingTop: 10,
     borderTopWidth: 1,
-    borderTopColor: '#f0f0f0',
+    borderTopColor: theme.border,
   },
   actionButton: {
     flexDirection: 'row',
@@ -202,7 +211,7 @@ const styles = StyleSheet.create({
   },
   actionText: {
     marginLeft: 5,
-    color: '#666',
+    color: theme.textSecondary,
   },
   emptyContainer: {
     alignItems: 'center',
@@ -211,13 +220,14 @@ const styles = StyleSheet.create({
   },
   emptyText: {
     fontSize: 18,
-    fontWeight: 'bold',
-    color: '#666',
+    fontFamily: theme.fontFamilySemiBold,
+    color: theme.textSecondary,
     marginTop: 15,
   },
   emptySubtext: {
     fontSize: 14,
-    color: '#999',
+    fontFamily: theme.fontFamily,
+    color: theme.textMuted,
     marginTop: 5,
   },
 });
