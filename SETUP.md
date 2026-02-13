@@ -81,6 +81,15 @@ Supabase sends OTP emails automatically. You can customize the email template:
 - Check your project's email quota in the dashboard
 - For production, consider using a custom SMTP server
 
+## Where Registration Data Is Stored
+
+When a user registers (Sign Up), data is stored in Supabase as follows:
+
+- **Auth user**: Email and account are stored in **Authentication** (Supabase → Authentication → Users). You’ll see the user there after the first sign-up.
+- **Profile fields**: Full name and college are sent as **user metadata** and stored with the auth user (visible in the user’s **User Metadata** in the Supabase dashboard). There is no separate `profiles` table; the app uses auth user metadata only.
+
+After enabling Email in Supabase (and optionally “Confirm email” and Email OTP), registration and login will work end-to-end.
+
 ## Security Notes
 
 - Never commit your Supabase keys to version control

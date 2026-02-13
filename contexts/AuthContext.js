@@ -101,6 +101,18 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const updateProfile = async (updates) => {
+    try {
+      const { data, error } = await supabase.auth.updateUser({
+        data: updates,
+      });
+      if (!error && data?.user) setUser(data.user);
+      return { data, error };
+    } catch (error) {
+      return { data: null, error };
+    }
+  };
+
   const value = {
     session,
     user,
@@ -110,6 +122,7 @@ export const AuthProvider = ({ children }) => {
     signUp,
     verifyOtp,
     signOut,
+    updateProfile,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

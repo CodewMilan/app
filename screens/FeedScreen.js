@@ -3,42 +3,19 @@ import {
   View,
   Text,
   StyleSheet,
-  ScrollView,
   TextInput,
   TouchableOpacity,
   FlatList,
+  Alert,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useAuth } from '../contexts/AuthContext';
 
 const FeedScreen = () => {
-  const [posts, setPosts] = useState([
-    {
-      id: '1',
-      username: 'john_doe',
-      content: 'Just completed my first React Native project! 🚀',
-      likes: 24,
-      comments: 5,
-      time: '2h ago',
-    },
-    {
-      id: '2',
-      username: 'jane_smith',
-      content: 'Learning about machine learning algorithms. Any recommendations?',
-      likes: 18,
-      comments: 8,
-      time: '4h ago',
-    },
-    {
-      id: '3',
-      username: 'dev_student',
-      content: 'Participated in my first hackathon today. Great experience!',
-      likes: 32,
-      comments: 12,
-      time: '6h ago',
-    },
-  ]);
-
+  const [posts, setPosts] = useState([]);
   const [newPost, setNewPost] = useState('');
+  const { user } = useAuth();
+  const displayName = user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'you';
 
   const handleLike = (postId) => {
     setPosts(
@@ -49,18 +26,27 @@ const FeedScreen = () => {
   };
 
   const handleAddPost = () => {
-    if (newPost.trim()) {
-      const post = {
-        id: Date.now().toString(),
-        username: 'you',
-        content: newPost,
-        likes: 0,
-        comments: 0,
-        time: 'now',
-      };
-      setPosts([post, ...posts]);
-      setNewPost('');
-    }
+    if (!newPost.trim()) return;
+    const post = {
+      id: Date.now().toString(),
+      username: displayName,
+      content: newPost.trim(),
+      likes: 0,
+      comments: 0,
+      time: 'now',
+    };
+    setPosts([post, ...posts]);
+    setNewPost('');
+  };
+
+  const handleComment = (item) => {
+    const preview = item.content.length > 30 ? item.content.slice(0, 30) + '...' : item.content;
+    Alert.alert('Comments', `Comments for this post will appear here. (Post: "${preview}")`, [{ text: 'OK' }]);
+  };
+
+  const handleShare = (item) => {
+    const preview = item.content.length > 40 ? item.content.slice(0, 40) + '...' : item.content;
+    Alert.alert('Share', `Share "${preview}"`, [{ text: 'OK' }]);
   };
 
   const renderPost = ({ item }) => (
@@ -83,11 +69,11 @@ const FeedScreen = () => {
           <Ionicons name="heart-outline" size={20} color="#666" />
           <Text style={styles.actionText}>{item.likes}</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.actionButton}>
+        <TouchableOpacity style={styles.actionButton} onPress={() => handleComment(item)}>
           <Ionicons name="chatbubble-outline" size={20} color="#666" />
           <Text style={styles.actionText}>{item.comments}</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.actionButton}>
+        <TouchableOpacity style={styles.actionButton} onPress={() => handleShare(item)}>
           <Ionicons name="share-outline" size={20} color="#666" />
         </TouchableOpacity>
       </View>
@@ -113,6 +99,13 @@ const FeedScreen = () => {
         renderItem={renderPost}
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.listContainer}
+        ListEmptyComponent={
+          <View style={styles.emptyContainer}>
+            <Ionicons name="newspaper-outline" size={64} color="#ccc" />
+            <Text style={styles.emptyText}>No posts yet</Text>
+            <Text style={styles.emptySubtext}>Share something with the community</Text>
+          </View>
+        }
       />
     </View>
   );
@@ -210,6 +203,22 @@ const styles = StyleSheet.create({
   actionText: {
     marginLeft: 5,
     color: '#666',
+  },
+  emptyContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 60,
+  },
+  emptyText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#666',
+    marginTop: 15,
+  },
+  emptySubtext: {
+    fontSize: 14,
+    color: '#999',
+    marginTop: 5,
   },
 });
 

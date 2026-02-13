@@ -19,7 +19,6 @@ import FeedScreen from './screens/FeedScreen';
 import ProjectsScreen from './screens/ProjectsScreen';
 import HackathonsScreen from './screens/HackathonsScreen';
 import CollegeScreen from './screens/CollegeScreen';
-import MentorsScreen from './screens/MentorsScreen';
 import StartupsScreen from './screens/StartupsScreen';
 import ProfileScreen from './screens/ProfileScreen';
 
@@ -42,8 +41,6 @@ function MainNavigator() {
             iconName = focused ? 'trophy' : 'trophy-outline';
           } else if (route.name === 'College') {
             iconName = focused ? 'school' : 'school-outline';
-          } else if (route.name === 'Mentors') {
-            iconName = focused ? 'people' : 'people-outline';
           } else if (route.name === 'Startups') {
             iconName = focused ? 'business' : 'business-outline';
           } else if (route.name === 'Profile') {
@@ -67,7 +64,6 @@ function MainNavigator() {
       <Tab.Screen name="Projects" component={ProjectsScreen} />
       <Tab.Screen name="Hackathons" component={HackathonsScreen} />
       <Tab.Screen name="College" component={CollegeScreen} />
-      <Tab.Screen name="Mentors" component={MentorsScreen} />
       <Tab.Screen name="Startups" component={StartupsScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
